@@ -15,9 +15,9 @@ I am finding it hard to keep up with his reading and his nuanced questions. I th
 
 ## Goals
 - [ ] Build the basic api & db structure for GPT4 chatbot
-- [ ] Scrape the web for trusted data sources
-- [ ] Index the fetched pages into Milvus
+- [X] Scrape the web for trusted data sources
+- [X] Index the fetched pages into Milvus
 - [ ] Add a frontend to the chatbot
-- [ ] Provide portfolio transaction data and market data
+- [X] Provide portfolio transaction data and market data
 - [ ] Provide visualizations using generated Python code
 - [ ] Provide scenario analysis using generated Python code
