@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "investment-manager"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "investment_manager"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openai = "^0.27.8"
+python-dotenv = "^1.0.0"
+httpx = "^0.24.1"
+pymilvus = "2.2"
+tabulate = "^0.9.0"
+yahoo-fin = "^0.8.9.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
