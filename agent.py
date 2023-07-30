@@ -8,7 +8,8 @@ import httpx
 from dotenv import load_dotenv
 from kb import search
 from portfolio import transaction_history
-from price import price
+from price import price, ratios
+from critic import critic
 load_dotenv()
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -64,6 +65,14 @@ Returns transaction history of the user
 price:
 e.g. price: Stock Code
 Returns the current price
+
+ratios:
+e.g. ratios: What is the price to earnings ratio of AMZN?
+Returns the key ratios of the stock
+
+critic:
+e.g. critic: The price to earnings ratio of TSLA is 86.5065, indicating that the stock may be overpriced.
+Returns a response by an expert to validate the final decision
 
 Always look things up on Stock Knowledgebase if you have the opportunity to do so.
 
@@ -129,7 +138,9 @@ known_actions = {
     "calculate": calculate,
     "knowledgebase": search,
     "transactions": transaction_history,
-    "price": price
+    "price": price,
+    "ratios": ratios,
+    "critic": critic
 }
 
 if __name__ == "__main__":

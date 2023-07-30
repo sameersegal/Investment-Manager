@@ -6,7 +6,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 
 def critic(decision: str, **kwargs):
     messages = [
-        {"role": "system", "content": f"""You are an expert investor of the caliber of Warren Buffet.
+        {"role": "system", "content": """You are an expert investor of the caliber of Warren Buffet.
          You are a long term buy and hold investor
          Always looking for great value points.
 
@@ -34,6 +34,6 @@ def critic(decision: str, **kwargs):
 
 
 if "__name__" == "__main__":
-    result = critic("Given that the stock price is low, I would buy Tesla.")
+    result = critic("The price to earnings ratio of TSLA is 86.5065, indicating that the stock may be overpriced.")
     print(result)
 
