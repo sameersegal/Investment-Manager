@@ -25,6 +25,7 @@ def transaction_history(query: str, **kwargs):
         Current Time is {current_date}.
         If filtering by dates, define both start date and end date conditions.
         Ensure data types are set correctly before filtering.
+        Remember to subtract quantities of shares sold
         The last line of the code should set the result to 'df_result' dataframe.
         Do not import any packages."""},
         {"role": "user", "content": query},
@@ -42,16 +43,32 @@ def transaction_history(query: str, **kwargs):
     df_result = pd.DataFrame()
     result = ""
     try:
-        exec(code)
+        namespace = {'pd': pd, 'df': df, 'df_result': df_result}
+        exec(code, namespace)
+        df_result = namespace['df_result']
         result = df_result.to_markdown()
     except Exception as e:
         print("An error occurred while executing the code:", e)
 
     if debug:
-        print(f"\033[1;34;40m{result}\n\034[0m")
+        print(f"\033[1;34;40m{result}\n\034")
 
     return result
 
 
 if __name__ == "__main__":
-    portfolio("Get transactions in the last quarter.")
+    kwargs = {
+        "debug": True
+    }
+    transaction_history("Get transactions in the last quarter.", **kwargs)
+    # df = pd.read_csv('stock_transactions.csv')
+    # start_date = '2000-01-01'  # Define the start date condition
+    # end_date = '2023-07-30'  # Define the end date condition
+
+    # # Convert 'Date' column to datetime data type
+    # df['Date'] = pd.to_datetime(df['Date'])
+
+    # # Filter the dataframe for TSLA purchases within the date range
+    # df_result = df[(df['Stock Code'] == 'TSLA') & (df['Action'] == 'Bought') & (df['Date'] >= start_date) & (df['Date'] <= end_date)]
+
+    # print(df_result)

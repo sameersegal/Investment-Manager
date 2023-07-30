@@ -11,7 +11,7 @@ def get_embedding(text):
     return response["data"][0]["embedding"]
 
 
-def search(query: str):
+def search(query: str, **kwargs):
 
     connections.connect('default', host='localhost', port='19530')
     collection_name = 'malkauns'

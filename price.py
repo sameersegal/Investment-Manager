@@ -1,6 +1,6 @@
 from yahoo_fin import stock_info
 
-def price(ticker):
+def price(ticker, **kwargs):
     return stock_info.get_live_price(ticker)
 
 if __name__ == "__main__":

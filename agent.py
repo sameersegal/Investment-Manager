@@ -111,7 +111,7 @@ def query(question, max_turns=5, **kwargs):
             return
 
 
-def wikipedia(q):
+def wikipedia(q: str, **kwargs):
     return httpx.get("https://en.wikipedia.org/w/api.php", params={
         "action": "query",
         "list": "search",
@@ -120,7 +120,7 @@ def wikipedia(q):
     }).json()["query"]["search"][0]["snippet"]
 
 
-def calculate(what):
+def calculate(what: str, **kwargs):
     return eval(what)
 
 
@@ -137,6 +137,7 @@ if __name__ == "__main__":
 
     # Add the arguments
     parser.add_argument('--debug',
+                        action="store_true",
                         help='an optional debug flag', required=False)
 
     parser.add_argument('--question',
