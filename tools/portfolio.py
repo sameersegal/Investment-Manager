@@ -3,13 +3,14 @@ import numpy as np
 import openai
 from datetime import datetime
 import tabulate
+import os
 
 
 def transaction_history(query: str, **kwargs):
 
     debug = kwargs.get("debug", False)
 
-    df = pd.read_csv('stock_transactions.csv')
+    df = pd.read_csv("tools/stock_transactions.csv")
     df['Date'] = pd.to_datetime(df['Date'])
 
     current_date = datetime.now()

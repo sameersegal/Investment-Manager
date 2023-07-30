@@ -6,10 +6,13 @@ import openai
 import re
 import httpx
 from dotenv import load_dotenv
-from kb import search
-from portfolio import transaction_history
-from price import price, ratios
-from critic import critic
+from tools import (
+    search,
+    transaction_history,
+    ratios,
+    price,
+    critic
+)
 load_dotenv()
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -37,66 +40,10 @@ class ChatBot:
         return completion.choices[0].message.content
 
 
-prompt = """
-You run in a loop of Thought, Action, PAUSE, Observation.
-At the end of the loop you output an Answer
-Use Thought to describe your thoughts about the question you have been asked.
-Use Action to run one of the actions available to you - then return PAUSE.
-Observation will be the result of running those actions.
-
-Your available actions are:
-
-calculate:
-e.g. calculate: 4 * 7 / 3
-Runs a calculation and returns the number - uses Python so be sure to use floating point syntax if necessary
-
-wikipedia:
-e.g. wikipedia: Django
-Returns a summary from searching Wikipedia
-
-knowledgebase:
-e.g. kb: TSLA Q3 performance
-Search Stock Knowledgebase 
-
-transactions:
-e.g. transactions: Get TSLA purchases in the last quarter
-Returns transaction history of the user
-
-price:
-e.g. price: Stock Code
-Returns the current price
-
-ratios:
-e.g. ratios: What is the price to earnings ratio of AMZN?
-Returns the key ratios of the stock
-
-critic:
-e.g. critic: The price to earnings ratio of TSLA is 86.5065, indicating that the stock may be overpriced.
-Returns a response by an expert to validate the final decision
-
-Always look things up on Stock Knowledgebase if you have the opportunity to do so.
-
-Example session:
-
-Question: What is the capital of France?
-Thought: I should look up France on Wikipedia
-Action: wikipedia: France
-PAUSE
-
-You will be called again with this:
-
-Observation: France is a country. The capital is Paris.
-
-You then output:
-
-Answer: The capital of France is Paris
-""".strip()
-
-
 action_re = re.compile('^Action: (\w+): (.*)$')
 
 
-def query(question, max_turns=5, **kwargs):
+def query(prompt: str, question: str, max_turns=5, **kwargs):
     i = 0
     bot = ChatBot(prompt)
     next_prompt = question
@@ -153,7 +100,11 @@ if __name__ == "__main__":
 
     parser.add_argument('--question',
                         type=str,
-                        help='an optional question', required=True)
+                        help='user question', required=True)
+
+    parser.add_argument('--prompt',
+                        type=int,
+                        help='prompt to use 1,2,3', required=True)
 
     # Parse the arguments
     args = parser.parse_args()
@@ -161,5 +112,13 @@ if __name__ == "__main__":
     kwargs = {}
     kwargs['debug'] = args.debug
     question = args.question
+    promptid = args.prompt
 
-    query(question, **kwargs)
+    if promptid > 3 or promptid < 1:
+        raise Exception("Prompt id must be 1,2,3")
+
+    prompt = ""
+    with open(f"prompts/prompt{promptid}.txt", "r") as f:
+        prompt = "\n".join(f.readlines()).strip()
+
+    query(prompt, question, **kwargs)
