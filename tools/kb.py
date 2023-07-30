@@ -4,6 +4,7 @@ from pymilvus import (
     Collection,
 )
 
+
 def get_embedding(text):
     response = openai.Embedding.create(
         engine="text-embedding-ada-002",
@@ -42,4 +43,4 @@ def search(query: str, **kwargs):
             "body": hit.entity.get('body')
         }
         ret.append(row)
-    return ret
+    return "\n\n".join([row['body'] for row in ret])
