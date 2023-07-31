@@ -4,3 +4,4 @@ poetry run python3 agent.py --prompt 1 --question "Is Tesla going to continue to
 poetry run python3 agent.py --prompt 2 --question "How much Tesla do I own? What's the total value of my position?"
 
 poetry run python3 agent.py --prompt 3 --question "Is TSLA overpriced right now"
+poetry run python3 agent.py --prompt 3 --question "Should I sell all my TSLA shares"
