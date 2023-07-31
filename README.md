@@ -13,6 +13,19 @@ My father-in-law is an avid reader and investor in public stocks. We aren't able
 
 I am finding it hard to keep up with his reading and his nuanced questions. I thought, if only there was an app for that?!
 
+## Developer Setup
+
+1. Install python3.10 and poetry - [https://python-poetry.org/docs/](https://python-poetry.org/docs/)
+2. Run Milvus (Vector Database) in standalone mode - [https://milvus.io/docs/install_standalone-docker.md](https://milvus.io/docs/install_standalone-docker.md)
+3. Insert data into Milvus. Take inspiration from my other project [https://github.com/sameersegal/investment-data](https://github.com/sameersegal/investment-data)
+4. Run the following bash commands
+```
+$poetry shell
+$poetry install
+$poetry run python3 agent.py --prompt 1 --question "What are the highlights of Tesla's latest quarter earnings?" --debug
+```
+Look at [Demo.md](Demo.md) for more examples
+
 ## Goals
 - [ ] Build the basic api & db structure for GPT4 chatbot
 - [X] Scrape the web for trusted data sources
